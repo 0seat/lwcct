@@ -1,0 +1,31 @@
+# 2-to-1 multiplexer block with the select pin on the bottom edge.
+blocks:
+  MUX2:
+    left: [I0, I1]
+    bottom: [S]
+    right: [Z]
+    parts:
+      n: NOT
+      a0: and_2
+      a1: and_2
+      o: or_2
+    nets:
+      - [S, n.INA, a1.INB]
+      - [n.OUT, a0.INB]
+      - [I0, a0.INA]
+      - [I1, a1.INA]
+      - [a0.Y, o.INA]
+      - [a1.Y, o.INB]
+      - [o.Y, Z]
+top:
+  parts:
+    s0: Binary Switch
+    s1: Binary Switch
+    ss: Binary Switch
+    m: MUX2
+    p: Binary Probe
+  nets:
+    - [s0.Q0, m.I0]
+    - [s1.Q0, m.I1]
+    - [ss.Q0, m.S]
+    - [m.Z, p.D0]

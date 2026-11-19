@@ -1,0 +1,25 @@
+# Two gated D latches in a row. The enable EN reaches both latches through a
+# signal name (remote connection) instead of a drawn wire; LogicWorks joins the
+# pieces into one signal. While EN = 1 both latches are transparent.
+blocks:
+  DLATCH:
+    title: D LATCH
+    left: [D, EN]
+    right: [Q]
+    parts: {i: NOT, a: nand_2, b: nand_2, q: nand_2, r: nand_2}
+    nets:
+      - [D, i.INA, a.INA]
+      - [i.OUT, b.INA]
+      - [EN, a.INB, b.INB]
+      - [a.Y, q.INA]
+      - [b.Y, r.INB]
+      - [q.Y, r.INA, Q]
+      - [r.Y, q.INB]
+top:
+  parts: {s: Binary Switch, c: Binary Switch, f0: DLATCH, f1: DLATCH, p0: Binary Probe, p1: Binary Probe}
+  nets:
+    - [s.Q0, f0.D]
+    - [f0.Q, f1.D, p0.D0]
+    - [f1.Q, p1.D0]
+  labels:
+    EN: [c.Q0, f0.EN, f1.EN]

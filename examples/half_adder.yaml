@@ -1,0 +1,25 @@
+# Half adder as a reusable block, driven by two switches.
+blocks:
+  HA:
+    left: [A, B]
+    right: [S, C]
+    parts:
+      x: xor_2
+      a: and_2
+    nets:
+      - [A, x.INA, a.INA]
+      - [B, x.INB, a.INB]
+      - [x.Y, S]
+      - [a.Y, C]
+top:
+  parts:
+    sa: Binary Switch
+    sb: Binary Switch
+    ha: HA
+    ps: Binary Probe
+    pc: Binary Probe
+  nets:
+    - [sa.Q0, ha.A]
+    - [sb.Q0, ha.B]
+    - [ha.S, ps.D0]
+    - [ha.C, pc.D0]

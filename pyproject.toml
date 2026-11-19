@@ -1,0 +1,21 @@
+[build-system]
+requires = ["setuptools>=61"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "lwcct"
+version = "0.1.0"
+description = "Generate LogicWorks 5 circuit (.cct) and library (.clf) files from YAML"
+readme = "README.md"
+requires-python = ">=3.9"
+license = {text = "MIT"}
+dependencies = ["pyyaml"]
+
+[project.optional-dependencies]
+test = ["pytest"]
+
+[project.scripts]
+lwcct = "lwcct.cli:main"
+
+[tool.setuptools.packages.find]
+where = ["src"]
