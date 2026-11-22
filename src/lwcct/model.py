@@ -256,7 +256,9 @@ class Design:
             at = next(k for k, i in enumerate(e.items) if is_(i, 'v')) + 1
             e.items.insert(at, n_('2', n_(0x9a, 0)))
         set_nums(e.kid('G'), 0x4400)
-        area = e.kid('1').kid('K').kid('0') if e.kid('1') is not None else None
+        area = e.kid('1')
+        for tag in ('K', '0'):     # page settings; some files have no K in them
+            area = area.kid(tag) if area is not None else None
         if area is not None:
             area.items = [i for i in area.items if not is_(i, '{')]
         set_nums(node.kid('U'), BLOCK_CODE, self._alloc_u(BLOCK_CODE))
